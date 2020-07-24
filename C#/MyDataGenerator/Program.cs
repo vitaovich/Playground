@@ -2,6 +2,7 @@
 using System.IO;
 using System.Reflection;
 using System.Linq;
+using System.Threading;
 
 namespace MyDataGenerator
 {
@@ -17,12 +18,28 @@ namespace MyDataGenerator
                 TestStartTime = DateTime.UtcNow,
                 TestEndTime = DateTime.Now
             };
+            Random random = new Random(1);
+            string prefix = "MY";
 
-            using (StreamWriter i = File.AppendText("./output/test.csv"))
+            string headers = ReflectObjectPropertyHeaders(test);
+            for(int i = 0; i < 10; i++)
             {
-                i.WriteLine(ReflectObjectPropertyHeaders(test));
-                i.WriteLine(ReflectObjectPropertyValues(test));
+                int number = random.Next(1000);
+                string sn = $"{prefix}{number}";
+                test.SerialNumber = sn;
+                string datetime = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
+
+                string values = ReflectObjectPropertyValues(test);
+                using (StreamWriter streamWriter = File.AppendText($"./output/{datetime}-{sn}.csv"))
+                {
+                    streamWriter.WriteLine(headers);
+                    streamWriter.WriteLine(values);
+                }
+                Console.WriteLine($"[{datetime}] Creating File.");
+                Thread.Sleep(TimeSpan.FromSeconds(1));
             }
+
+
         }
 
         public static string ReflectObjectPropertyHeaders (object obj) 

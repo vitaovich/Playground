@@ -1,3 +1,6 @@
 C#/TodoApi/obj/*
 C#/TodoApi/bin/*
 .vscode/*
+
+C#/MyDataGenerator/obj/*
+C#/MyDataGenerator/bin/*

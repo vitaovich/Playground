@@ -23,9 +23,19 @@ curl -k -H "Content-Type: application/json"
 {
   "name":"walk dog",
   "isComplete":true
-}' 
-https://localhost:5001/api/TodoItems
+}' https://localhost:5001/api/TodoItems
 
 ## get
 curl -k https://localhost:5001/api/TodoItems # get list
 curl -k https://localhost:5001/api/TodoItems/1  # get TodoItems with id = 1
+
+## put
+curl -X PUT -k -H "Content-Type: application/json" -d '
+{
+  "ID":1,
+  "name":"feed fish",
+  "isComplete":true
+}' https://localhost:5001/api/TodoItems
+
+## delete
+curl -X DELETE -k https://localhost:5001/api/TodoItems/1
